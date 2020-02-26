@@ -1,4 +1,12 @@
 import React, { Component } from 'react';
+import styles from './SignUpForm.module.css';
+import TextInput from '../TextInput';
+import {
+  USER_NAME_PATTERN,
+  LOGIN_PATTERN,
+  EMAIL_PATTERN,
+  PASSWORD_PATTERN
+} from '../../constants/index.js';
 
 class SignUpForm extends Component {
   constructor (props) {
@@ -21,24 +29,21 @@ class SignUpForm extends Component {
                       ...this.state.signUpData,
                       [e.target.name]: e.target.value
                     },
-
                   });
   };
 
   checkPassword = () => {
     return (this.state.signUpData.password ===
             this.state.signUpData.passwordConfirm);
-
   };
 
   submitHandler = e => {
     e.preventDefault();
 
     if (this.checkPassword()) {
-
       const data = { ...this.state.signUpData };
       delete data.passwordConfirm;
-      console.log(data);
+
       const options = {
         method: 'POST',
         headers: {
@@ -46,58 +51,65 @@ class SignUpForm extends Component {
         },
         body: JSON.stringify(data)
       };
+
       fetch('http://192.168.0.106:3000/authorization/sign_up', options)
         .then(res => res.json())
         .then(user => {
           this.setState({ user });
           console.log(this.state);
         }).catch(err => console.dir(err));
+    } else {
+      alert('Incorrect Password');
     }
-    console.log('passwordIncorrent');
   };
 
   render () {
     return (
       <form action={'POST'}
             onSubmit={this.submitHandler}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              maxWidth: '380px',
-              textAlign: 'center',
-            }}
+            className={styles.container}
       >
-        <input type="text"
-               onChange={this.handleInput}
-               value={this.state.signUpData.firstName}
-               placeholder={'name'}
-               name={'firstName'}
+        <TextInput type="text"
+                   isRequired={true}
+                   onChange={this.handleInput}
+                   value={this.state.signUpData.firstName}
+                   placeholder={'name'}
+                   name={'firstName'}
+                   pattern={USER_NAME_PATTERN}
         />
-        <input type="text"
-               onChange={this.handleInput}
-               value={this.state.signUpData.lastName}
-               placeholder={'last name'}
-               name={'lastName'}
+        <TextInput type="text"
+                   isRequired={true}
+                   onChange={this.handleInput}
+                   value={this.state.signUpData.lastName}
+                   placeholder={'last name'}
+                   name={'lastName'}
+                   pattern={USER_NAME_PATTERN}
         />
-        <input type="email"
-               onChange={this.handleInput}
-               value={this.state.signUpData.email}
-               placeholder={'email'}
-               name={'email'}
+        <TextInput type="email"
+                   isRequired={true}
+                   onChange={this.handleInput}
+                   value={this.state.signUpData.email}
+                   placeholder={'email'}
+                   name={'email'}
+                   pattern={EMAIL_PATTERN}
         />
-        <input type="password"
-               onChange={this.handleInput}
-               value={this.state.signUpData.password}
-               placeholder={'input password'}
-               name={'password'}
+        <TextInput type="password"
+                   isRequired={true}
+                   onChange={this.handleInput}
+                   value={this.state.signUpData.password}
+                   placeholder={'input password'}
+                   name={'password'}
+                   pattern={PASSWORD_PATTERN}
         />
-        <input type="password"
-               onChange={this.handleInput}
-               value={this.state.signUpData.passwordConfirm}
-               placeholder={'confirm password'}
-               name={'passwordConfirm'}
+        <TextInput type="password"
+                   isRequired={true}
+                   onChange={this.handleInput}
+                   value={this.state.signUpData.passwordConfirm}
+                   placeholder={'confirm password'}
+                   name={'passwordConfirm'}
+                   pattern={PASSWORD_PATTERN}
         />
-        <input type="submit" value="Submit"/>
+        <TextInput type="submit" value="Submit"/>
       </form>
     );
   }

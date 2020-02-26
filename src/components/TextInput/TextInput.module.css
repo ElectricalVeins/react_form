@@ -1,0 +1,6 @@
+.ValidInput{
+    border:1px solid green;
+}
+.InvalidInput{
+    border:1px solid red;
+}

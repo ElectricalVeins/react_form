@@ -1,0 +1,35 @@
+.container{
+    margin: 0 auto;
+    display: flex;
+    flex-direction:column;
+    width: 75%;
+    min-width: 300px;
+    background-color: white;
+}
+
+.container > input{
+    height:24px;
+    margin: 2px 0px;
+    padding: 20px;
+
+    font-size: 20px;
+
+    border:1px solid rgb(189, 199, 216) ;
+    border-radius: 5px;
+
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.container > input:last-child{
+    background-color: #5B9348;
+    cursor: pointer;
+    max-width: 150px;
+    color: white;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.container > input:last-child:hover{
+    background-color: #6caa4e;
+}
